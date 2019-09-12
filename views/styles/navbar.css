@@ -1,0 +1,67 @@
+@font-face {
+    font-family: TolkienCyr;
+    src: url("../fonts/TOLKIENCYR.ttf");
+}
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/*#everyone{*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr;*/
+/*    grid-template-areas:*/
+/*    "ul"*/
+/*    "main"*/
+/*    ;*/
+/*}*/
+
+/*ul{*/
+/*    grid-area: ul;*/
+/*}*/
+
+header>nav>ul{
+    background: #3949ab;
+    display: grid;
+    grid-template-columns: repeat(6, 100px);
+    grid-auto-rows: 50px;
+    justify-items: center;
+    align-items: center;
+    padding-left: 6.4%;
+}
+
+header>nav>ul>li{
+    display: block;
+}
+/*header>nav>ul>li:not(.logo){*/
+/*    margin-top: 9.6%;*/
+/*}*/
+header>nav>ul>.logo{
+    margin-bottom: 9%;
+}
+header>nav>ul>li>a{
+    font-size: 13px;
+    color: white;
+}
+header>nav>ul>li>a:hover:not(.logo_link){
+    color: #7986cb;
+}
+header>nav>ul>.logo>a{
+    font-family: TolkienCyr;
+    font-size: 30px;
+}
+
+.account{
+    position: absolute;
+    right: 2%;
+    top: 2%;
+}
+.account>a{
+    color: white;
+    padding-left: 20px;
+}
