@@ -13,10 +13,7 @@ class Router
             $this->routes = require_once 'config/routes.php'; //здесь содержимое файла routes.php копируется в переменную routes класса Router
     }
 
-    private function convert_to_regex($pattern){ //фукнция, которая превращает ключи массива routes в регулярные
-        // выражения, то
-        // есть
-        // шаблоны
+    private function convert_to_regex($pattern){ //фукнция, которая превращает ключи массива routes в регулярные выражения, то есть шаблоны
         $pattern = '#^' . $pattern . '$#';
         return $pattern;
     }
@@ -54,9 +51,7 @@ class Router
         if(isset($params)) {
             if(array_key_exists('id', $params)){ //если параметр один, то это id статьи, и нужно в $params засунуть id статьи
                 if(isset($_GET['id'])) $params = ['id' => (int)$_REQUEST['id']];
-            }elseif(array_key_exists('email', $params) and array_key_exists('password', $params) and array_key_exists
-                ('author_name', $params)){//если параметра три, то это логин, пароль и имя автора (никнейм), их тоже
-                // нужно засунуть в $params
+            }elseif(array_key_exists('email', $params) and array_key_exists('password', $params) and array_key_exists('author_name', $params)){//если параметра три, то это логин, пароль и имя автора (никнейм), их тоже нужно засунуть в $params
                 if(isset($_POST['email']) and isset($_POST['password']) and isset($_POST['author_name']))$params = ['author_name' => htmlspecialchars($_REQUEST['author_name']), 'email' => htmlspecialchars($_REQUEST['email']), 'password' => crypt(htmlspecialchars($_REQUEST['password']), htmlspecialchars($_REQUEST['email']))];
             }elseif(array_key_exists('email', $params) and array_key_exists('password', $params)){//если параметра два, то это логин и пароль, их нужно засунуть в $params
                 if(isset($_POST['email']) and isset($_POST['password'])) $params = ['email' => htmlspecialchars($_REQUEST['email']), 'password' => crypt(htmlspecialchars($_REQUEST['password']), htmlspecialchars($_REQUEST['email']))];
@@ -67,7 +62,6 @@ class Router
             }
 
         }
-//            $get_param = (int) $get_param;
         return $params;
     }
     private function createUrl($route){
