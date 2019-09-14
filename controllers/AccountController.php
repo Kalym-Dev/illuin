@@ -8,11 +8,10 @@ use core\Controller; //используем пространство имен ч
 
 class AccountController extends Controller //собственно наследуемся
 {
-    public function loginAction($params = []){ //метод авторизации, который на вход принимает массив с паратремами email и пароль
+    public function loginAction($params){ //метод авторизации, который на вход принимает массив с паратремами email и пароль
         if(!@$_SESSION['user']['authorization']) { //если авторизации нет, то
             if (!empty($params)) { //проверяем на пустоту аргументы
                 if (!empty($params['email'])) { //проверяем на пустоту поле email
-                    $params['password'] = crypt($params['password'], $params['email']);
                     $result = $this->model->validate_params($params); //если все ок, то передаем методу модели эти параметры
                     if ($result) { //если есть соответсвия
                         $_SESSION['user']['authorization'] = true; //создается сессия авторизации
@@ -32,7 +31,6 @@ class AccountController extends Controller //собственно наследу
     }
 
     public function registerAction($params){ //метод регистрации пользователя
-        $params['password'] = crypt($params['password'], $params['email']);
         $user_data = $this->model->insert_params($params); //метод вставки данных пользователя в базу данны
         if(!@$_SESSION['user']['authorization']) {
                 if (!empty($user_data)) { //если нас постиг успех, то
