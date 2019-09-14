@@ -56,7 +56,7 @@ class StateController extends Controller
             if($res){
                 $this->view->redirect('index.php');
             }else{
-                echo 'Ошибка';
+                $this->view->redirect('index.php');
             }
         }
     }
