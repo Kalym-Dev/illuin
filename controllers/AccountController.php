@@ -11,17 +11,15 @@ class AccountController extends Controller //собственно наследу
     public function loginAction($params){ //метод авторизации, который на вход принимает массив с паратремами email и пароль
         if(!@$_SESSION['user']['authorization']) { //если авторизации нет, то
             if (!empty($params)) { //проверяем на пустоту аргументы
-                if (!empty($params['email'])) { //проверяем на пустоту поле email
+                if (array_key_exists('email', $params) and array_key_exists('password', $params) and isset($params['email']) and isset($params['password'])) { //проверяем на пустоту поле email
                     $result = $this->model->validate_params($params); //если все ок, то передаем методу модели эти параметры
                     if ($result) { //если есть соответсвия
                         $_SESSION['user']['authorization'] = true; //создается сессия авторизации
                         $_SESSION['user']['user_data'] = $result;
                         $this->view->redirect('index.php'); //и редирект на главную страницу
                     }else{
-//                       echo 'Неправильный логин или пароль!'; //если что-то пошло не так, выводится сообщение
+                        echo 'Неправильный логи или пароль!';
                     }
-                } else {
-//                    echo 'Введите e-mail'; //если не заполнен email
                 }
             }
         }else{
