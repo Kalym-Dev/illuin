@@ -44,19 +44,15 @@ class StateController extends Controller
             return $text;
     }
 
-    public function editAction($param){
-        if(count($param) == 1){ //если передается id, то
-            $data_of_state = $this->model->get_state_data($param); //в массив $data_of_state передаем данные о статье
+    public function editAction($params){
+        if(array_key_exists('title', $params) and array_key_exists('text', $params) and array_key_exists('id', $params)){ //если передается id, title, text то значит что поступил запрос на изменение статьи
+            $res = $this->model->edit_state($params);
+            $this->view->redirect('index.php');
+        }elseif(array_key_exists('id', $params)){ //если передается id, то
+            $data_of_state = $this->model->get_state_data($params); //в массив $data_of_state передаем данные о статье
             foreach($data_of_state as $data_of_state){
                 $data_of_state = $data_of_state;
                 $this->view->render($data_of_state);
-            }
-        }elseif(count($param) == 3){ //если передается id, title, text то значит что поступил запрос на изменение статьи
-            $res = $this->model->edit_state($param);
-            if($res){
-                $this->view->redirect('index.php');
-            }else{
-                $this->view->redirect('index.php');
             }
         }
     }
