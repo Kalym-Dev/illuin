@@ -13,7 +13,10 @@ class Router
             $this->routes = require_once 'config/routes.php'; //здесь содержимое файла routes.php копируется в переменную routes класса Router
     }
 
-    private function convert_to_regex($pattern){ //фукнция, которая превращает ключи массива routes в регулярные выражения, то есть шаблоны
+    private function convert_to_regex($pattern){ //фукнция, которая превращает ключи массива routes в регулярные
+        // выражения, то
+        // есть
+        // шаблоны
         $pattern = '#^' . $pattern . '$#';
         return $pattern;
     }
@@ -47,21 +50,24 @@ class Router
         }
         return false; //иначе - false
     }
-    private function parse_params($params = []){ //функция принимает в качестве аргумента GET-параметр, который превращается в число и возращает это число
-        if(isset($params)) {
-            if(array_key_exists('id', $params)){ //если параметр один, то это id статьи, и нужно в $params засунуть id статьи
-                if(isset($_GET['id'])) $params = ['id' => (int)$_REQUEST['id']];
-            }elseif(array_key_exists('email', $params) and array_key_exists('password', $params) and array_key_exists('author_name', $params)){//если параметра три, то это логин, пароль и имя автора (никнейм), их тоже нужно засунуть в $params
+    private function parse_params($params){ //функция принимает в качестве аргумента GET-параметр, который превращается в число и возращает это число
+        if(isset($params)){
+            if(array_key_exists('title', $params) and array_key_exists('text', $params) and array_key_exists('id', $params)){
+                if(isset($_POST['title']) and isset($_REQUEST['text']) and isset($_REQUEST['id'])) $params = ['title' => $_REQUEST['title'], 'text' => $_REQUEST['text'], 'id' => $_REQUEST['id']];
+            }elseif(array_key_exists('email', $params) and array_key_exists('password', $params) and array_key_exists
+                ('author_name', $params)){//если параметра три, то это логин, пароль и имя автора (никнейм), их тоже
+                // нужно засунуть в $params
                 if(isset($_POST['email']) and isset($_POST['password']) and isset($_POST['author_name']))$params = ['author_name' => htmlspecialchars($_REQUEST['author_name']), 'email' => htmlspecialchars($_REQUEST['email']), 'password' => crypt(htmlspecialchars($_REQUEST['password']), htmlspecialchars($_REQUEST['email']))];
             }elseif(array_key_exists('email', $params) and array_key_exists('password', $params)){//если параметра два, то это логин и пароль, их нужно засунуть в $params
                 if(isset($_POST['email']) and isset($_POST['password'])) $params = ['email' => htmlspecialchars($_REQUEST['email']), 'password' => crypt(htmlspecialchars($_REQUEST['password']), htmlspecialchars($_REQUEST['email']))];
-            }elseif(array_key_exists('title', $params) and array_key_exists('text', $params)){
-              if(isset($_POST['title']) and isset($_POST['text'])) $params = ['title' => $_POST['title'], 'text' => $_POST['text']];
+            }elseif(array_key_exists('id', $params)){ //если параметр один, то это id статьи, и нужно в $params засунуть id статьи
+                if(isset($_GET['id'])) $params = ['id' => (int)$_REQUEST['id']];
             }else{
                 $params = [];
             }
 
         }
+//            $get_param = (int) $get_param;
         return $params;
     }
     private function createUrl($route){
